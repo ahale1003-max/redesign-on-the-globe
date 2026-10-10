@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stewart Ave Auto Group — Wausau, WI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Source+Sans+3:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --col-accent:  #8B1A1A;
+      --col-red:     #C0392B;
+      --col-red-lt:  #E74C3C;
+      --ac-accent:   #0369A1;
+      --ac-blue:     #0EA5E9;
+      --sto-accent:  #B45309;
+      --sto-gold:    #F59E0B;
+      --sto-gold-lt: #FCD34D;
+      --font-h: 'Lexend', sans-serif;
+      --font-b: 'Source Sans 3', sans-serif;
+      --ease:   cubic-bezier(0.4, 0, 0.2, 1);
+      --spring: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    html, body {
+      height: 100%;
+      font-family: var(--font-b);
+      background: #050A14;
+      overflow: hidden;
+    }
+
+    /* ── Top header ────────────────────────────────── */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 300;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      height: 64px;
+      background: rgba(5,10,20,0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+
+    .header-logo {
+      font-family: var(--font-h);
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+    }
+
+    .header-logo strong {
+      color: #fff;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+    }
+
+    .header-dot {
+      display: inline-block;
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      margin: 0 14px;
+      vertical-align: middle;
+    }
+
+    /* ── Stage ─────────────────────────────────────── */
+    .stage {
+      display: flex;
+      height: 100vh;
+      width: 100vw;
+      padding-top: 64px;
+    }
+
+    /* ── Panel shared ──────────────────────────────── */
+    .panel {
+      position: relative;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      cursor: pointer;
+      overflow: hidden;
+      text-decoration: none;
+      outline: none;
+      transition: flex 0.62s var(--spring);
+    }
+
+    /* ── Hover expand — 3 panels ───────────────────── */
+    .stage:has(.panel-col:hover) .panel-col,
+    .stage:has(.panel-col:focus-visible) .panel-col { flex: 1.6; }
+    .stage:has(.panel-col:hover) .panel-ac,
+    .stage:has(.panel-col:focus-visible) .panel-ac  { flex: 0.7; }
+    .stage:has(.panel-col:hover) .panel-sto,
+    .stage:has(.panel-col:focus-visible) .panel-sto { flex: 0.7; }
+
+    .stage:has(.panel-ac:hover) .panel-ac,
+    .stage:has(.panel-ac:focus-visible) .panel-ac  { flex: 1.6; }
+    .stage:has(.panel-ac:hover) .panel-col,
+    .stage:has(.panel-ac:focus-visible) .panel-col { flex: 0.7; }
+    .stage:has(.panel-ac:hover) .panel-sto,
+    .stage:has(.panel-ac:focus-visible) .panel-sto { flex: 0.7; }
+
+    .stage:has(.panel-sto:hover) .panel-sto,
+    .stage:has(.panel-sto:focus-visible) .panel-sto { flex: 1.6; }
+    .stage:has(.panel-sto:hover) .panel-col,
+    .stage:has(.panel-sto:focus-visible) .panel-col { flex: 0.7; }
+    .stage:has(.panel-sto:hover) .panel-ac,
+    .stage:has(.panel-sto:focus-visible) .panel-ac  { flex: 0.7; }
+
+    /* ── Collision panel ───────────────────────────── */
+    .panel-col { background: #0a0a0a; }
+
+    .panel-col .bg-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.45;
+      transition: opacity 0.55s var(--ease);
+      pointer-events: none;
+    }
+
+    .panel-col:hover .bg-video,
+    .panel-col:focus-visible .bg-video { opacity: 0.6; }
+
+    .panel-col .bg-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.35;
+      transition: opacity 0.55s var(--ease);
+      pointer-events: none;
+    }
+
+    .panel-col:hover .bg-photo,
+    .panel-col:focus-visible .bg-photo { opacity: 0.5; }
+
+    .panel-col .overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(90,10,10,0.92) 0%, rgba(20,5,5,0.6) 45%, rgba(0,0,0,0.3) 100%),
+        linear-gradient(135deg, rgba(139,26,26,0.25) 0%, transparent 60%);
+      transition: background 0.55s var(--ease);
+    }
+
+    .panel-col:hover .overlay,
+    .panel-col:focus-visible .overlay {
+      background:
+        linear-gradient(to top, rgba(110,15,15,0.97) 0%, rgba(30,5,5,0.65) 45%, rgba(0,0,0,0.25) 100%),
+        linear-gradient(135deg, rgba(192,57,43,0.35) 0%, transparent 60%);
+    }
+
+    /* Sheen sweep on hover */
+    .panel::after {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      width: 60px;
+      background: linear-gradient(to right, transparent, rgba(255,255,255,0.04), transparent);
+      transform: translateX(-120px);
+      transition: transform 0.8s ease;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    .panel:hover::after { transform: translateX(800px); }
+
+    /* ── Auto Care panel ────────────────────────────── */
+    .panel-ac { background: #030D1A; }
+
+    .panel-ac .bg-video {
+      position: absolute;
+      top: 50%;
+      right: 0;
+      transform: translateY(-50%);
+      min-width: 100%;
+      min-height: 100%;
+      width: auto;
+      height: auto;
+      opacity: 0.35;
+      transition: opacity 0.55s var(--ease);
+      pointer-events: none;
+    }
+
+    .panel-ac:hover .bg-video,
+    .panel-ac:focus-visible .bg-video { opacity: 0.52; }
+
+    .panel-ac .overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(3,50,90,0.95) 0%, rgba(3,20,50,0.65) 45%, rgba(0,5,20,0.4) 100%),
+        radial-gradient(ellipse at 70% 30%, rgba(3,105,161,0.3) 0%, transparent 65%);
+      transition: background 0.55s var(--ease);
+    }
+
+    .panel-ac:hover .overlay,
+    .panel-ac:focus-visible .overlay {
+      background:
+        linear-gradient(to top, rgba(3,65,115,0.98) 0%, rgba(3,30,65,0.7) 45%, rgba(0,5,20,0.35) 100%),
+        radial-gradient(ellipse at 70% 30%, rgba(14,165,233,0.4) 0%, transparent 60%);
+    }
+
+    .panel-ac .grid-tex {
+      position: absolute;
+      inset: 0;
+      opacity: 0.04;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.6) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.6) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* ── Storage panel ──────────────────────────────── */
+    .panel-sto { background: #0C0802; }
+
+    .panel-sto .bg-photo {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center center;
+      opacity: 0.28;
+      transition: opacity 0.55s var(--ease);
+      pointer-events: none;
+    }
+
+    .panel-sto:hover .bg-photo,
+    .panel-sto:focus-visible .bg-photo { opacity: 0.42; }
+
+    .panel-sto .overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(80,35,0,0.96) 0%, rgba(40,18,0,0.65) 45%, rgba(10,5,0,0.4) 100%),
+        radial-gradient(ellipse at 30% 70%, rgba(180,83,9,0.25) 0%, transparent 65%);
+      transition: background 0.55s var(--ease);
+    }
+
+    .panel-sto:hover .overlay,
+    .panel-sto:focus-visible .overlay {
+      background:
+        linear-gradient(to top, rgba(100,45,0,0.98) 0%, rgba(55,25,0,0.7) 45%, rgba(10,5,0,0.35) 100%),
+        radial-gradient(ellipse at 30% 70%, rgba(245,158,11,0.35) 0%, transparent 60%);
+    }
+
+    /* Subtle corrugated-metal texture */
+    .panel-sto .metal-tex {
+      position: absolute;
+      inset: 0;
+      opacity: 0.06;
+      background-image: repeating-linear-gradient(
+        180deg,
+        rgba(255,255,255,0.5) 0px,
+        rgba(255,255,255,0.5) 1px,
+        transparent 1px,
+        transparent 14px
+      );
+      pointer-events: none;
+    }
+
+    /* Warm glow circles */
+    .panel-sto .glow-deco {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .panel-sto .glow-deco:nth-child(1) {
+      width: 400px; height: 400px;
+      top: -100px; left: -100px;
+      background: radial-gradient(circle, rgba(180,83,9,0.1) 0%, transparent 70%);
+    }
+
+    .panel-sto .glow-deco:nth-child(2) {
+      width: 250px; height: 250px;
+      bottom: 100px; right: -60px;
+      background: radial-gradient(circle, rgba(245,158,11,0.08) 0%, transparent 70%);
+    }
+
+    /* ── Dividers — left edges of panel-ac and panel-sto ── */
+    .panel-ac::before,
+    .panel-sto::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0; left: 0;
+      width: 1px;
+      background: linear-gradient(to bottom,
+        transparent,
+        rgba(255,255,255,0.1) 20%,
+        rgba(255,255,255,0.2) 50%,
+        rgba(255,255,255,0.1) 80%,
+        transparent
+      );
+      z-index: 50;
+      pointer-events: none;
+    }
+
+    /* ── Panel content ──────────────────────────────── */
+    .panel-content {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      padding: 0 48px 52px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+    }
+
+    /* ── Collision logo ── */
+    .panel-logo {
+      width: 220px;
+      height: auto;
+      margin-bottom: 24px;
+      opacity: 0.92;
+      filter: drop-shadow(0 2px 16px rgba(0,0,0,0.7));
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      clip-path: inset(3% 1% 3% 1% round 2px);
+    }
+
+    .panel-col:hover .panel-logo { opacity: 1; transform: translateY(-3px); }
+
+    /* ── Auto Care logo ── */
+    .ac-logo-panel {
+      width: 190px;
+      height: auto;
+      margin-bottom: 24px;
+      display: block;
+      filter: invert(1) drop-shadow(0 2px 12px rgba(0,0,0,0.5));
+      mix-blend-mode: screen;
+      opacity: 0.9;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .panel-ac:hover .ac-logo-panel { opacity: 1; transform: translateY(-3px); }
+
+    /* ── Storage logo (text-based until assets provided) ── */
+    .sto-logo {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 24px;
+      opacity: 0.92;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      filter: drop-shadow(0 2px 16px rgba(0,0,0,0.8));
+    }
+
+    .panel-sto:hover .sto-logo { opacity: 1; transform: translateY(-3px); }
+
+    .sto-logo-top {
+      font-family: var(--font-h);
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: rgba(253,211,77,0.7);
+    }
+
+    .sto-logo-main {
+      font-family: var(--font-h);
+      font-size: 1.55rem;
+      font-weight: 800;
+      letter-spacing: -0.01em;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .sto-logo-main span {
+      color: var(--sto-gold);
+    }
+
+    /* ── Tag pill ───────────────────────────────────── */
+    .panel-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      font-family: var(--font-h);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      border-radius: 100px;
+      padding: 5px 13px;
+      margin-bottom: 16px;
+    }
+
+    .panel-col .panel-tag {
+      color: #FECACA;
+      background: rgba(139,26,26,0.35);
+      border: 1px solid rgba(220,80,80,0.4);
+    }
+
+    .panel-ac .panel-tag {
+      color: #BAE6FD;
+      background: rgba(3,105,161,0.3);
+      border: 1px solid rgba(14,165,233,0.38);
+    }
+
+    .panel-sto .panel-tag {
+      color: #FDE68A;
+      background: rgba(180,83,9,0.3);
+      border: 1px solid rgba(245,158,11,0.38);
+    }
+
+    .tag-dot {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      animation: blink 2.4s ease infinite;
+    }
+
+    .panel-col .tag-dot  { background: #F87171; }
+    .panel-ac  .tag-dot  { background: #38BDF8; }
+    .panel-sto .tag-dot  { background: #FCD34D; }
+
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.35; }
+    }
+
+    /* ── Headings ───────────────────────────────────── */
+    .panel-heading {
+      font-family: var(--font-h);
+      font-size: clamp(1.9rem, 2.8vw, 3rem);
+      font-weight: 800;
+      line-height: 1.08;
+      letter-spacing: -0.025em;
+      color: #fff;
+      margin-bottom: 14px;
+      text-shadow: 0 2px 24px rgba(0,0,0,0.6);
+      transition: transform 0.35s var(--ease);
+    }
+
+    .panel:hover .panel-heading { transform: translateY(-4px); }
+
+    .panel-col .panel-heading em  { color: #F87171; font-style: normal; }
+    .panel-ac  .panel-heading em  { color: #38BDF8; font-style: normal; }
+    .panel-sto .panel-heading em  { color: var(--sto-gold); font-style: normal; }
+
+    /* ── Sub ────────────────────────────────────────── */
+    .panel-sub {
+      font-size: 0.92rem;
+      color: rgba(255,255,255,0.52);
+      line-height: 1.65;
+      max-width: 340px;
+      margin-bottom: 24px;
+      transition: opacity 0.35s ease, transform 0.35s ease;
+    }
+
+    .panel:hover .panel-sub {
+      opacity: 1;
+      color: rgba(255,255,255,0.65);
+      transform: translateY(-3px);
+    }
+
+    /* ── Service chips ──────────────────────────────── */
+    .panel-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-bottom: 28px;
+      opacity: 0;
+      transform: translateY(12px);
+      transition: opacity 0.3s ease 0.08s, transform 0.3s ease 0.08s;
+    }
+
+    .panel:hover .panel-chips,
+    .panel:focus-visible .panel-chips {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .chip {
+      font-size: 0.72rem;
+      font-weight: 500;
+      padding: 5px 12px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+
+    .panel-col .chip {
+      color: #FECACA;
+      background: rgba(139,26,26,0.3);
+      border: 1px solid rgba(220,80,80,0.25);
+    }
+
+    .panel-ac .chip {
+      color: #BAE6FD;
+      background: rgba(3,105,161,0.25);
+      border: 1px solid rgba(14,165,233,0.25);
+    }
+
+    .panel-sto .chip {
+      color: #FDE68A;
+      background: rgba(180,83,9,0.25);
+      border: 1px solid rgba(245,158,11,0.25);
+    }
+
+    /* ── CTA button ─────────────────────────────────── */
+    .panel-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-h);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      padding: 13px 28px;
+      border-radius: 8px;
+      border: none;
+      text-decoration: none;
+      cursor: pointer;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.2s ease;
+    }
+
+    .panel-col .panel-cta {
+      background: var(--col-red);
+      color: #fff;
+      box-shadow: 0 4px 22px rgba(192,57,43,0.45);
+    }
+
+    .panel-col:hover .panel-cta,
+    .panel-col:focus-visible .panel-cta {
+      background: var(--col-red-lt);
+      box-shadow: 0 6px 30px rgba(231,76,60,0.55);
+      transform: translateY(-2px);
+    }
+
+    .panel-ac .panel-cta {
+      background: var(--ac-accent);
+      color: #fff;
+      box-shadow: 0 4px 22px rgba(3,105,161,0.45);
+    }
+
+    .panel-ac:hover .panel-cta,
+    .panel-ac:focus-visible .panel-cta {
+      background: #0284C7;
+      box-shadow: 0 6px 30px rgba(14,165,233,0.55);
+      transform: translateY(-2px);
+    }
+
+    .panel-sto .panel-cta {
+      background: var(--sto-accent);
+      color: #fff;
+      box-shadow: 0 4px 22px rgba(180,83,9,0.45);
+    }
+
+    .panel-sto:hover .panel-cta,
+    .panel-sto:focus-visible .panel-cta {
+      background: #D97706;
+      box-shadow: 0 6px 30px rgba(245,158,11,0.55);
+      transform: translateY(-2px);
+    }
+
+    .panel-cta svg {
+      width: 15px; height: 15px;
+      transition: transform 0.2s ease;
+    }
+
+    .panel:hover .panel-cta svg { transform: translateX(4px); }
+
+    /* ── Corner label ───────────────────────────────── */
+    .corner-label {
+      position: absolute;
+      top: 24px;
+      font-family: var(--font-h);
+      font-size: 0.62rem;
+      font-weight: 600;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      opacity: 0.3;
+      color: #fff;
+      transition: opacity 0.3s ease;
+      z-index: 10;
+    }
+
+    .panel-col  .corner-label { left: 24px; }
+    .panel-ac   .corner-label { left: 24px; }
+    .panel-sto  .corner-label { left: 24px; }
+    .panel:hover .corner-label { opacity: 0.6; }
+
+    /* ── Bottom hint ────────────────────────────────── */
+    .bottom-hint {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-h);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.22);
+      pointer-events: none;
+      animation: hintFade 4s ease 2s forwards;
+    }
+
+    .bottom-hint svg { width: 14px; height: 14px; opacity: 0.4; }
+
+    @keyframes hintFade {
+      0%   { opacity: 1; }
+      70%  { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* ── Auto care background circles ──────────────── */
+    .circle-deco {
+      position: absolute;
+      border-radius: 50%;
+      pointer-events: none;
+    }
+
+    .panel-ac .circle-deco:nth-child(1) {
+      width: 380px; height: 380px;
+      top: -80px; right: -80px;
+      background: radial-gradient(circle, rgba(3,105,161,0.12) 0%, transparent 70%);
+    }
+
+    .panel-ac .circle-deco:nth-child(2) {
+      width: 220px; height: 220px;
+      bottom: 120px; left: -60px;
+      background: radial-gradient(circle, rgba(14,165,233,0.08) 0%, transparent 70%);
+    }
+
+    /* ── Tablet & Mobile ────────────────────────────── */
+    @media (max-width: 768px) {
+      html, body { overflow: auto; }
+
+      .header { padding: 0 20px; }
+
+      /* Stage stacks vertically */
+      .stage {
+        flex-direction: column;
+        height: auto;
+        min-height: 100vh;
+        padding-top: 64px;
+      }
+
+      /* Each panel is a tall content block */
+      .panel {
+        min-height: 62vh;
+        justify-content: flex-end;
+        flex: none !important;
+      }
+
+      /* Remove side dividers — use top border instead */
+      .panel-ac::before,
+      .panel-sto::before { display: none; }
+
+      .panel-ac,
+      .panel-sto { border-top: 1px solid rgba(255,255,255,0.07); }
+
+      /* Content padding */
+      .panel-content { padding: 0 22px 40px; }
+
+      /* Logos */
+      .panel-logo { width: 170px; }
+
+      .ac-logo-panel { width: 160px; }
+
+      /* Always show chips — no hover needed on touch */
+      .panel-chips { opacity: 1; transform: none; flex-wrap: wrap; }
+
+      /* Headings */
+      .panel-heading { font-size: clamp(1.65rem, 6vw, 2rem); }
+
+      /* Sub text readable without hover */
+      .panel-sub { opacity: 1; color: rgba(255,255,255,0.55); font-size: 0.88rem; max-width: 100%; }
+
+      /* CTA — full-width, large touch target */
+      .panel-cta {
+        width: 100%;
+        justify-content: center;
+        padding: 15px 20px;
+        font-size: 0.9rem;
+      }
+
+      /* Tag */
+      .panel-tag { font-size: 0.58rem; padding: 5px 11px; }
+
+      /* Storage text logo */
+      .sto-logo-main { font-size: 1.3rem; }
+
+      /* Hide bottom hint on mobile */
+      .bottom-hint { display: none; }
+    }
+
+    /* ── Small phones (≤ 480px) ─────────────────────── */
+    @media (max-width: 480px) {
+      .panel { min-height: 58vh; }
+      .panel-content { padding: 0 18px 32px; }
+      .panel-heading { font-size: 1.5rem; }
+      .panel-logo { width: 145px; }
+      .ac-logo-panel { width: 130px; }
+      .chip { font-size: 0.67rem; padding: 4px 10px; }
+      .panel-cta { font-size: 0.85rem; padding: 14px 16px; }
+    }
+
+    /* ══ Epic Motion System — landing ═════════════════ */
+
+    /* Page-load entrance — panel containers (depth-4) */
+    .panel-content {
+      opacity: 0;
+      transform: translateY(18px);
+      transition: opacity 0.7s var(--spring), transform 0.7s var(--spring);
+    }
+    body.js-loaded .panel-content { opacity: 1; transform: translateY(0); }
+
+    /* Header slides down on load */
+    .header {
+      opacity: 0;
+      transform: translateY(-8px);
+      transition: opacity 0.55s var(--spring), transform 0.55s var(--spring);
+    }
+    body.js-loaded .header { opacity: 1; transform: translateY(0); }
+
+    /* Bottom hint fades in after panels */
+    .bottom-hint { opacity: 0; transition: opacity 0.5s ease; }
+    body.js-loaded .bottom-hint {
+      opacity: 1;
+      animation: hintFade 4s ease 3.5s forwards;
+    }
+
+    /* Floating atmosphere — depth-1 orbs animate in loops */
+    @keyframes floatOrb {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      35%       { transform: translate(14px, -22px) scale(1.06); }
+      68%       { transform: translate(-10px, -14px) scale(0.96); }
+    }
+    @keyframes floatOrbAlt {
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      42%       { transform: translate(-17px, 16px) scale(1.08); }
+      74%       { transform: translate(12px, -10px) scale(0.94); }
+    }
+
+    .panel-ac .circle-deco:nth-child(1) { animation: floatOrb    16s ease-in-out infinite; }
+    .panel-ac .circle-deco:nth-child(2) { animation: floatOrbAlt 12s ease-in-out infinite; }
+    .panel-sto .glow-deco:nth-child(1)  { animation: floatOrb    18s ease-in-out infinite; }
+    .panel-sto .glow-deco:nth-child(2)  { animation: floatOrbAlt 14s ease-in-out infinite; }
+
+    /* Pulsing red haze on collision panel — depth-1 atmosphere */
+    @keyframes pulseHaze {
+      0%, 100% { opacity: 0.12; }
+      50%       { opacity: 0.22; }
+    }
+    .panel-col::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 40% 20%, rgba(192,57,43,0.3) 0%, transparent 65%);
+      pointer-events: none;
+      z-index: 1;
+      animation: pulseHaze 6s ease-in-out infinite;
+    }
+
+    /* CTA interactive depth response */
+    .panel-cta {
+      transition: transform 0.2s var(--spring), background 0.2s ease, box-shadow 0.25s ease !important;
+    }
+    .panel-cta:active { transform: scale(0.96) !important; }
+
+    /* NOW OPEN badge pulse */
+    .panel-ac .panel-tag [style*="NOW OPEN"],
+    .panel-ac .panel-tag span[style] {
+      animation: badgePulse 2.6s ease-in-out infinite;
+    }
+    @keyframes badgePulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(56,189,248,0.5); }
+      50%       { box-shadow: 0 0 0 7px rgba(56,189,248,0); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="header" role="banner">
+    <p class="header-logo">
+      <strong>Stewart Ave</strong>
+      <span class="header-dot" aria-hidden="true"></span>
+      Auto Group
+      <span class="header-dot" aria-hidden="true"></span>
+      Wausau, WI
+    </p>
+  </header>
+
+  <!-- Stage -->
+  <main class="stage" role="main">
+
+    <!-- ── Collision & Repair ──────────────────────── -->
+    <a class="panel panel-col"
+       href="collision.html"
+       aria-label="Stewart Ave Collision and Repair — view services and schedule">
+
+      <video class="bg-video"
+             autoplay muted loop playsinline
+             poster="assets/building.png"
+             aria-hidden="true">
+        <source src="assets/collision-bg.mp4" type="video/mp4" />
+        <source src="assets/collision-bg.mov" type="video/quicktime" />
+      </video>
+
+      <div class="overlay" aria-hidden="true"></div>
+
+      <span class="corner-label" aria-hidden="true">01 — Collision</span>
+
+      <div class="panel-content">
+
+        <img class="panel-logo"
+             src="assets/logo.png"
+             alt="Stewart Ave Collision and Repair logo" />
+
+        <span class="panel-tag">
+          <span class="tag-dot" aria-hidden="true"></span>
+          Collision &amp; Body Work
+        </span>
+
+        <h2 class="panel-heading">
+          Collision &amp;<br/><em>Repair</em>
+        </h2>
+
+        <p class="panel-sub">
+          Central Wisconsin's trusted auto body shop. From scratch to total reconstruction — we restore your vehicle to pre-accident condition with a <strong style="color:rgba(255,255,255,0.8)">Lifetime Warranty</strong>.
+        </p>
+
+        <div class="panel-chips" aria-hidden="true">
+          <span class="chip">Body &amp; Frame</span>
+          <span class="chip">Color Matching</span>
+          <span class="chip">Welding</span>
+          <span class="chip">All Insurance</span>
+          <span class="chip">Free Loaner Cars</span>
+        </div>
+
+        <span class="panel-cta">
+          View Services &amp; Schedule
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+
+      </div>
+    </a>
+
+    <!-- ── Auto Care ──────────────────────────────── -->
+    <a class="panel panel-ac"
+       href="autocare.html"
+       aria-label="Stewart Ave Auto Care — view services and schedule">
+
+      <video class="bg-video"
+             autoplay muted loop playsinline
+             poster="assets/autocare-building.jpg"
+             aria-hidden="true">
+        <source src="assets/tire-change.mov" type="video/quicktime" />
+        <source src="assets/tire-change.mov" type="video/mp4" />
+      </video>
+
+      <div class="overlay" aria-hidden="true"></div>
+      <div class="circle-deco" aria-hidden="true"></div>
+      <div class="circle-deco" aria-hidden="true"></div>
+      <div class="grid-tex" aria-hidden="true"></div>
+
+      <span class="corner-label" aria-hidden="true">02 — Auto Care</span>
+
+      <div class="panel-content">
+
+        <img class="ac-logo-panel" src="assets/autocare-logo-new.png" alt="Stewart Ave Auto Care logo" />
+
+        <span class="panel-tag">
+          <span class="tag-dot" aria-hidden="true"></span>
+          Maintenance &amp; General Repair
+          &nbsp;<span style="font-weight:800;color:#38BDF8;letter-spacing:0.08em;background:rgba(3,105,161,0.4);padding:2px 8px;border-radius:100px;font-size:0.6rem;">NOW OPEN</span>
+        </span>
+
+        <h2 class="panel-heading">
+          Stewart Ave<br/><em>Auto Care</em>
+        </h2>
+
+        <p class="panel-sub">
+          Oil changes, brakes, tires, and general repairs — all under one roof. Same trusted team, brand-new building.
+        </p>
+
+        <div class="panel-chips" aria-hidden="true">
+          <span class="chip">Oil Changes</span>
+          <span class="chip">Tire Service</span>
+          <span class="chip">Brakes</span>
+          <span class="chip">Diagnostics</span>
+          <span class="chip">General Repair</span>
+        </div>
+
+        <span class="panel-cta">
+          View Services &amp; Schedule
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+
+      </div>
+    </a>
+
+    <!-- ── Storage ───────────────────────────────────── -->
+    <a class="panel panel-sto"
+       href="storage.html"
+       aria-label="Stewart Ave Storage — view available units">
+
+      <img class="bg-photo"
+           src="assets/storage-front.jpg"
+           alt=""
+           aria-hidden="true" />
+      <div class="overlay" aria-hidden="true"></div>
+      <div class="metal-tex" aria-hidden="true"></div>
+      <div class="glow-deco" aria-hidden="true"></div>
+      <div class="glow-deco" aria-hidden="true"></div>
+
+      <span class="corner-label" aria-hidden="true">03 — Storage</span>
+
+      <div class="panel-content">
+
+        <div class="sto-logo" aria-label="Stewart Ave Storage logo">
+          <span class="sto-logo-top">Stewart Ave</span>
+          <span class="sto-logo-main"><span>Storage</span></span>
+        </div>
+
+        <span class="panel-tag">
+          <span class="tag-dot" aria-hidden="true"></span>
+          Secure Storage Units
+        </span>
+
+        <h2 class="panel-heading">
+          Safe &amp; Secure<br/><em>Storage</em>
+        </h2>
+
+        <p class="panel-sub">
+          Climate-controlled and drive-up units in multiple sizes. Month-to-month rentals with 24/7 access — right here on Stewart Ave.
+        </p>
+
+        <div class="panel-chips" aria-hidden="true">
+          <span class="chip">Drive-Up Access</span>
+          <span class="chip">RV Storage</span>
+          <span class="chip">Security Cameras</span>
+          <span class="chip">5'×10' – 10'×40'</span>
+          <span class="chip">Family Owned</span>
+        </div>
+
+        <span class="panel-cta">
+          View Available Units
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M5 12h14M12 5l7 7-7 7"/>
+          </svg>
+        </span>
+
+      </div>
+    </a>
+
+  </main>
+
+  <!-- Bottom hint -->
+  <p class="bottom-hint" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M5 12h14M12 5l7 7-7 7"/>
+    </svg>
+    Select your location to get started
+  </p>
+
+  <script>
+  (function () {
+    'use strict';
+    const SPRING = 'cubic-bezier(0.23, 1, 0.32, 1)';
+    const noMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    // ── Staggered page-load entrance ───────────────────
+    // Panels stagger in 0 / 120 / 240ms — panel-content CSS handles opacity/transform
+    function initEntrance() {
+      document.querySelectorAll('.panel-content').forEach((el, i) => {
+        el.style.transitionDelay = `${0.28 + i * 0.12}s`;
+      });
+      // Small rAF so the delay registers before we add the class
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          document.body.classList.add('js-loaded');
+        });
+      });
+    }
+
+    // ── Mousemove parallax + hover bg scale ────────────
+    // depth-0 bg layers shift subtly opposite to mouse — cinematic illusion of depth
+    function initParallax() {
+      if (noMotion) return;
+      const isFine = window.matchMedia('(pointer: fine)').matches;
+      if (!isFine) return;  // skip on touch devices
+
+      document.querySelectorAll('.panel').forEach(panel => {
+        const bgEl = panel.querySelector('.bg-video') || panel.querySelector('.bg-photo');
+        if (!bgEl) return;
+        const isAcVideo = panel.classList.contains('panel-ac');
+
+        let hovering = false;
+        let mx = 0, my = 0;
+
+        const getBase = () => isAcVideo ? 'translateY(-50%) ' : '';
+        const applyTransform = (scale) => {
+          const tx = hovering ? mx * -11 : 0;
+          const ty = hovering ? my * -8  : 0;
+          bgEl.style.transform = `${getBase()}translate(${tx.toFixed(1)}px, ${ty.toFixed(1)}px) scale(${scale})`;
+        };
+
+        panel.addEventListener('mouseenter', () => {
+          hovering = true;
+          bgEl.style.transition = `transform 0.7s ${SPRING}, opacity 0.55s var(--ease)`;
+          applyTransform(1.07);
+        });
+
+        panel.addEventListener('mouseleave', () => {
+          hovering = false; mx = 0; my = 0;
+          bgEl.style.transition = `transform 0.7s ${SPRING}, opacity 0.55s var(--ease)`;
+          applyTransform(1.0);
+        });
+
+        panel.addEventListener('mousemove', (e) => {
+          const r = panel.getBoundingClientRect();
+          mx = (e.clientX - r.left)  / r.width  - 0.5;
+          my = (e.clientY - r.top)   / r.height - 0.5;
+          // No easing on move — direct tracking feels tactile
+          bgEl.style.transition = `opacity 0.55s var(--ease)`;
+          applyTransform(1.07);
+        });
+      });
+    }
+
+    initEntrance();
+    initParallax();
+  })();
+  </script>
+</body>
+</html>

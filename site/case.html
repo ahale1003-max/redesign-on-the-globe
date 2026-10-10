@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Case study — On The Globe Marketing</title>
+  <meta name="description" content="How and why we built it — a case study from On The Globe Marketing.">
+  <meta name="theme-color" content="#1E2329">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="work">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header data-nav></header>
+  <main id="main" data-case></main>
+  <footer data-footer></footer>
+
+  <script src="data/projects.js"></script>
+  <script>
+  // Render the case study before site.js wires up reveals + nav theming.
+  (function () {
+    const data = window.OTG_DATA;
+    const slug = new URLSearchParams(location.search).get("p");
+    const p = data.projects.find((x) => x.slug === slug) || data.projects[0];
+    const root = document.querySelector("[data-case]");
+    if (!p) { root.innerHTML = '<section class="page-hero" data-theme="dark"><div class="wrap"><h1 class="page-hero__title">Nothing here yet.</h1></div></section>'; return; }
+
+    const region = data.regions.find((r) => r.id === p.region) || { name: "", id: "" };
+    const pad = (n) => String(n).padStart(2, "0");
+    const cs = p.caseStudy || { sections: [] };
+    const coord = ([lon, lat]) => `${Math.abs(lat).toFixed(2)}° ${lat >= 0 ? "N" : "S"}, ${Math.abs(lon).toFixed(2)}° ${lon >= 0 ? "E" : "W"}`;
+    document.title = `${p.client} — Case study — On The Globe Marketing`;
+
+    const gallery = (p.pages || []).slice(1, 4);
+    const chapters = cs.sections.map((s, i) => {
+      const body = s.list
+        ? `<ul class="chapter__list">${s.list.map((li, j) => `<li><span>${pad(j + 1)}</span>${li}</li>`).join("")}</ul>`
+        : `<div class="chapter__text">${(s.body || []).map((t) => `<p>${t}</p>`).join("")}</div>`;
+      const block = `
+        <article class="chapter">
+          <p class="chapter__label label"><span class="n">${pad(i + 1)}</span>${s.label}</p>
+          <div class="reveal">
+            <h2 class="chapter__title">${s.title}</h2>
+            ${body}
+          </div>
+        </article>`;
+      // drop the screenshots in after the "thinking" chapter
+      if (i === 2 && gallery.length) {
+        return block + `
+          <div class="case-gallery reveal">
+            ${gallery.map((g, k) => `<figure class="${k === 0 ? "tall" : ""}"><img src="${g.shot}" alt="${p.client} — ${g.label} page" loading="lazy"><figcaption>${g.label}</figcaption></figure>`).join("")}
+          </div>`;
+      }
+      return block;
+    }).join("");
+
+    const others = data.projects.filter((x) => x.slug !== p.slug);
+    const next = others[0];
+
+    root.innerHTML = `
+      <section class="case-hero" data-theme="dark">
+        <div class="wrap">
+          <nav class="crumbs label" aria-label="Breadcrumb">
+            <a href="work.html">Work</a><span>/</span><a href="work.html#${region.id}">${region.name}</a><span>/</span><span>${p.short || p.client}</span>
+          </nav>
+          <h1 class="case-hero__title">
+            <span class="line-mask"><span>${p.client}</span></span>
+          </h1>
+          <p class="case-hero__lede reveal" style="--delay:150ms">${cs.lede || p.summary}</p>
+          <dl class="case-meta">
+            <div><dt class="label">Location</dt><dd>${p.city}<br><span class="coord label" style="color:var(--muted-dark)">${coord(p.coords)}</span></dd></div>
+            <div><dt class="label">Year</dt><dd>${p.year}</dd></div>
+            <div><dt class="label">Industry</dt><dd>${p.category}</dd></div>
+            <div><dt class="label">What we did</dt><dd>${p.services.join(", ")}</dd></div>
+          </dl>
+        </div>
+      </section>
+
+      <section class="case-stage" data-theme="dark">
+        <div class="wrap">
+          <div class="live reveal">
+            <div class="live__bar">
+              <div class="tabs" data-tabs aria-label="Pages"></div>
+              <a class="text-link label" href="${p.live}" target="_blank" rel="noopener" style="color:var(--fog)">Open full screen ↗</a>
+            </div>
+            <div class="live__view" data-view></div>
+          </div>
+          <p class="live__note label"><span>This is the real site — click around.</span><span>${p.city}</span></p>
+        </div>
+      </section>
+
+      <section class="case-body" data-theme="light">
+        <div class="wrap">${chapters}</div>
+      </section>
+
+      <section class="next-case" data-theme="dark">
+        <div class="wrap next-case__row">
+          ${next
+            ? `<h2>Next: ${next.client}</h2><a class="btn btn--brick" href="case.html?p=${next.slug}">View case study <span class="arrow">→</span></a>`
+            : `<h2>Want to be the next case study?</h2><a class="btn btn--brick" href="#contact">Start a project <span class="arrow">→</span></a>`}
+        </div>
+      </section>`;
+
+    window.__OTG_CASE = p;
+  })();
+  </script>
+  <script src="js/site.js"></script>
+  <script>
+  (function () {
+    const p = window.__OTG_CASE;
+    const view = document.querySelector("[data-view]");
+    if (!p || !view) return;
+    const preview = OTG.livePreview(view, p);
+    OTG.tabsFor(document.querySelector("[data-tabs]"), preview);
+  })();
+  </script>
+</body>
+</html>

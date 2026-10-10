@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>About — On The Globe Marketing</title>
+  <meta name="description" content="On The Globe Marketing is a three-person studio building websites, ads, social and strategy for local businesses.">
+  <meta name="theme-color" content="#1E2329">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="about">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header data-nav></header>
+
+  <main id="main">
+    <section class="page-hero" data-theme="dark">
+      <div class="wrap">
+        <p class="page-hero__label label">About us</p>
+        <div class="page-hero__row">
+          <h1 class="page-hero__title">
+            <span class="line-mask"><span>Three people.</span></span>
+            <span class="line-mask" style="--delay:90ms"><span><em>No fluff.</em></span></span>
+          </h1>
+          <p class="page-hero__sub reveal" style="--delay:200ms">On The Globe is a small studio started by three friends who grew up online and never stopped building things for it.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="manifesto" data-theme="light">
+      <div class="wrap">
+        <p class="section-head__label label">What we're about</p>
+        <p class="manifesto__text" data-light-words>We're new, and we'll be the first to say it. What we bring is honesty, energy and a real obsession with the craft. We won't overpromise. We'll show up, do the work ourselves, and make your business something people can find — and something you're proud to point them to.</p>
+      </div>
+    </section>
+
+    <section class="team" data-theme="light">
+      <div class="wrap">
+        <div class="section-head">
+          <div>
+            <p class="section-head__label label">The team</p>
+            <h2 class="section-head__title">Who you'll<br>actually talk to.</h2>
+          </div>
+          <p class="section-head__text">No account managers, no hand-offs. The people on your first call are the people doing the work.</p>
+        </div>
+        <div class="team__grid">
+          <!-- To add a photo: put it in /img/team/ and add <img src="img/team/jaden.jpg" alt="Jaden"> inside .person__photo -->
+          <article class="person reveal">
+            <div class="person__photo"><span class="person__mono" aria-hidden="true">J</span><span class="label">Photo coming soon</span></div>
+            <h3 class="person__name">Jaden</h3>
+            <p class="person__role label">Co-founder · Design &amp; Strategy</p>
+            <p>Jaden has been drawn to design since he first figured out how to make a logo look better in middle school. He handles the visual side of things — brand identity, layouts, and making sure everything feels intentional.</p>
+          </article>
+          <article class="person reveal" style="--delay:120ms">
+            <div class="person__photo"><span class="person__mono" aria-hidden="true">A</span><span class="label">Photo coming soon</span></div>
+            <h3 class="person__name">Aidan</h3>
+            <p class="person__role label">Co-founder · Tech &amp; Creative</p>
+            <p>Aidan grew up tinkering with websites, tools and whatever came out next. He bridges the gap between good design and the technology that runs it, making sure every client's site works as well as it looks.</p>
+          </article>
+          <article class="person reveal" style="--delay:240ms">
+            <div class="person__photo"><span class="person__mono" aria-hidden="true">R</span><span class="label">Photo coming soon</span></div>
+            <h3 class="person__name">River</h3>
+            <p class="person__role label">Co-founder · Advertising &amp; Analytics</p>
+            <p>River has always been the one asking why something worked. He runs the advertising and the numbers behind it — figuring out who to reach, what to say to them, and whether it actually brought anyone through the door.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="values" data-theme="dark">
+      <div class="wrap">
+        <p class="section-head__label label" style="color:var(--muted-dark)">How we work</p>
+        <h2 class="section-head__title">Three rules we don't break.</h2>
+        <div class="values__list">
+          <div class="value reveal"><span class="n label">01</span><h3>Straight answers.</h3><p>If something won't help your business, we'll tell you — even if it means a smaller invoice.</p></div>
+          <div class="value reveal" style="--delay:100ms"><span class="n label">02</span><h3>Built from scratch.</h3><p>No templates. Every site, ad and post is made for your business and the people you serve.</p></div>
+          <div class="value reveal" style="--delay:200ms"><span class="n label">03</span><h3>Show the work.</h3><p>Every project we're proud of goes on the map, with the real site and the thinking behind it.</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer data-footer></footer>
+
+  <script src="data/projects.js"></script>
+  <script src="js/site.js"></script>
+  <script>
+  // Manifesto: words light up as you scroll through it
+  (function () {
+    const el = document.querySelector("[data-light-words]");
+    if (!el) return;
+    el.innerHTML = el.textContent.trim().split(/\s+/).map((w) => `<span class="w">${w}</span>`).join(" ");
+    const words = el.querySelectorAll(".w");
+    if (OTG.reduceMotion) { words.forEach((w) => w.classList.add("is-lit")); return; }
+    let tick = false;
+    function update() {
+      tick = false;
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      const p = Math.min(1, Math.max(0, (vh * 0.8 - r.top) / (r.height + vh * 0.35)));
+      const n = Math.round(p * words.length);
+      words.forEach((w, i) => w.classList.toggle("is-lit", i < n));
+    }
+    window.addEventListener("scroll", () => { if (!tick) { tick = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
+  })();
+  </script>
+</body>
+</html>

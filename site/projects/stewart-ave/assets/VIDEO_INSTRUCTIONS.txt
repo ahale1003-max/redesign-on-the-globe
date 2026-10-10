@@ -1,0 +1,7 @@
+Place your collision shop video in this folder and name it:
+  collision-bg.mp4   (preferred — best browser support)
+  OR
+  collision-bg.mov   (works in Safari, Chrome, Edge on Mac)
+
+The landing page will automatically use it as the background video
+for the Collision & Repair panel.

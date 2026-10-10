@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Work — On The Globe Marketing</title>
+  <meta name="description" content="Websites and marketing work by On The Globe Marketing, organized by where our clients are.">
+  <meta name="theme-color" content="#1E2329">
+  <link rel="icon" href="img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="work">
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header data-nav></header>
+
+  <main id="main">
+    <section class="page-hero" data-theme="dark">
+      <div class="wrap">
+        <p class="page-hero__label label">Work · by place</p>
+        <div class="page-hero__row">
+          <h1 class="page-hero__title">
+            <span class="line-mask"><span>Every pin,</span></span>
+            <span class="line-mask" style="--delay:90ms"><span><em>up close.</em></span></span>
+          </h1>
+          <p class="page-hero__sub reveal" style="--delay:200ms">Our work, sorted by where our clients are. Pick a state to see what we built there and why. <a class="text-link" href="index.html">Back to the map →</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="regions" data-theme="light">
+      <div class="wrap">
+        <div class="regions__head label" aria-hidden="true">
+          <span></span><span>Place</span><span>Country</span><span>Projects</span><span></span>
+        </div>
+        <div data-regions></div>
+        <p class="region-soon">More places coming as new work launches.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer data-footer></footer>
+
+  <script src="data/projects.js"></script>
+  <script src="js/site.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+  <script>
+  (function () {
+    const { data, projectsIn, pad, fmtCoord } = window.OTG;
+    const host = document.querySelector("[data-regions]");
+
+    host.innerHTML = data.regions.map((r) => {
+      const ps = projectsIn(r.id);
+      return `
+      <div class="region" id="${r.id}">
+        <button class="region__row" type="button" aria-expanded="false" aria-controls="${r.id}-body">
+          <svg class="region__shape" viewBox="0 0 52 52" aria-hidden="true" data-shape="${r.id}"></svg>
+          <span class="region__name">${r.name}</span>
+          <span class="region__country label">${r.country}<br><span class="coord">${fmtCoord(r.pin)}</span></span>
+          <span class="region__count label"><b>${pad(ps.length)}</b> project${ps.length === 1 ? "" : "s"}</span>
+          <span class="region__toggle" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 12 12"><path d="M6 0v12M0 6h12" stroke="currentColor" stroke-width="1.5"/></svg></span>
+        </button>
+        <div class="region__body" id="${r.id}-body">
+          <div class="region__inner">
+            <div class="region__projects">
+              ${ps.map((p) => `
+                <a class="pcard" href="case.html?p=${p.slug}">
+                  <div class="pcard__img"><img src="${p.cover}" alt="${p.client} website" loading="lazy"></div>
+                  <div class="pcard__body">
+                    <div class="pcard__top label"><span>${p.city}</span><span>${p.year}</span></div>
+                    <h2 class="pcard__title">${p.client}</h2>
+                    <p class="pcard__text">${p.summary}</p>
+                    <span class="text-link">Read the case study →</span>
+                  </div>
+                </a>`).join("")}
+            </div>
+          </div>
+        </div>
+      </div>`;
+    }).join("");
+
+    function setOpen(region, open) {
+      region.classList.toggle("is-open", open);
+      region.querySelector(".region__row").setAttribute("aria-expanded", String(open));
+      region.querySelector(".region__body").inert = !open;
+    }
+    const regions = Array.from(host.querySelectorAll(".region"));
+    regions.forEach((el) => {
+      setOpen(el, false);
+      el.querySelector(".region__row").addEventListener("click", () => {
+        const open = !el.classList.contains("is-open");
+        setOpen(el, open);
+        history.replaceState(null, "", open ? "#" + el.id : location.pathname);
+      });
+    });
+    // open from a link like work.html#wisconsin — or the first state if there's only one
+    const target = location.hash ? document.getElementById(location.hash.slice(1)) : (regions.length === 1 ? regions[0] : null);
+    if (target && target.classList.contains("region")) setOpen(target, true);
+
+    // state / country silhouettes
+    if (window.d3 && window.topojson) {
+      Promise.all([
+        d3.json("https://cdn.jsdelivr.net/npm/us-atlas@3.0.1/states-10m.json"),
+        d3.json("https://cdn.jsdelivr.net/npm/world-atlas@2.0.2/countries-110m.json")
+      ]).then(([us, world]) => {
+        const states = topojson.feature(us, us.objects.states).features;
+        const countries = topojson.feature(world, world.objects.countries).features;
+        data.regions.forEach((r) => {
+          const f = r.fips ? states.find((s) => String(s.id).padStart(2, "0") === r.fips)
+                           : countries.find((c) => String(c.id) === String(r.iso));
+          const svg = document.querySelector(`[data-shape="${r.id}"]`);
+          if (!f || !svg) return;
+          const proj = d3.geoMercator().fitExtent([[3, 3], [49, 49]], f);
+          svg.innerHTML = `<path d="${d3.geoPath(proj)(f)}"/>`;
+          const [x, y] = proj(r.pin);
+          svg.innerHTML += `<circle cx="${x}" cy="${y}" r="3.2" fill="#C84B4B" stroke="#F5F5F3" stroke-width="1.2"/>`;
+        });
+      }).catch(() => {});
+    }
+  })();
+  </script>
+</body>
+</html>

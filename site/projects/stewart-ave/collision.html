@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Stewart Ave Collision &amp; Repair LLC — Wausau, WI</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700;800&family=Source+Sans+3:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red:        #8B1A1A;
+      --red-mid:    #C0392B;
+      --red-lt:     #E74C3C;
+      --dark:       #0D0505;
+      --dark-card:  #160A0A;
+      --dark-mid:   #1A0C0C;
+      --text:       #F5F0F0;
+      --muted:      #9C8B8B;
+      --dim:        #6B5555;
+      --border:     rgba(255,255,255,0.07);
+      --font-h: 'Lexend', sans-serif;
+      --font-b: 'Source Sans 3', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--dark);
+      color: var(--text);
+      font-family: var(--font-b);
+      line-height: 1.65;
+    }
+
+    /* ── NAV ────────────────────────────────────────── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 200;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 40px;
+      background: rgba(13,5,5,0.9);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(139,26,26,0.25);
+    }
+
+    .nav-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      text-decoration: none;
+      color: var(--muted);
+      font-family: var(--font-h);
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      transition: color 0.2s;
+    }
+
+    .nav-back:hover { color: var(--text); }
+    .nav-back svg { width: 15px; height: 15px; }
+
+    .nav-logo img {
+      height: 36px;
+      width: auto;
+      opacity: 0.9;
+      clip-path: inset(3% 1% 3% 1% round 2px);
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red-mid);
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--font-h);
+      font-size: 0.8rem;
+      font-weight: 600;
+      padding: 9px 20px;
+      border-radius: 7px;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.2s;
+    }
+
+    .nav-cta:hover { background: var(--red-lt); transform: translateY(-1px); }
+
+    /* ── HERO ───────────────────────────────────────── */
+    .hero {
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      opacity: 0.5;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to top, rgba(13,5,5,1) 0%, rgba(13,5,5,0.75) 35%, rgba(13,5,5,0.25) 70%, transparent 100%),
+        linear-gradient(to right, rgba(13,5,5,0.7) 0%, transparent 60%);
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 2;
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      padding: 0 40px 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: end;
+    }
+
+    .hero-left {}
+
+    .hero-logo {
+      width: 280px;
+      height: auto;
+      margin-bottom: 32px;
+      filter: drop-shadow(0 4px 20px rgba(0,0,0,0.7));
+      clip-path: inset(3% 1% 3% 1% round 2px);
+    }
+
+    .hero-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-h);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: #FECACA;
+      background: rgba(139,26,26,0.3);
+      border: 1px solid rgba(220,80,80,0.3);
+      padding: 5px 13px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--red-lt);
+      animation: blink 2s ease infinite;
+    }
+
+    @keyframes blink {
+      0%,100% { opacity: 1; }
+      50%      { opacity: 0.3; }
+    }
+
+    .hero h1 {
+      font-family: var(--font-h);
+      font-size: clamp(2.2rem, 4vw, 3.6rem);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.025em;
+      color: #fff;
+      text-shadow: 0 2px 30px rgba(0,0,0,0.5);
+      margin-bottom: 20px;
+    }
+
+    .hero h1 em { color: #F87171; font-style: normal; }
+
+    .hero-desc {
+      font-size: 1.02rem;
+      color: rgba(255,255,255,0.58);
+      line-height: 1.7;
+      max-width: 460px;
+      margin-bottom: 36px;
+    }
+
+    .hero-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-red {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--red-mid);
+      color: #fff;
+      text-decoration: none;
+      font-family: var(--font-h);
+      font-size: 0.9rem;
+      font-weight: 700;
+      padding: 14px 30px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 4px 22px rgba(192,57,43,0.4);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .btn-red:hover {
+      background: var(--red-lt);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 30px rgba(231,76,60,0.5);
+    }
+
+    .btn-red svg { width: 15px; height: 15px; transition: transform 0.2s; }
+    .btn-red:hover svg { transform: translateX(3px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--muted);
+      text-decoration: none;
+      font-family: var(--font-h);
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 14px 26px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      transition: color 0.2s, border-color 0.2s;
+    }
+
+    .btn-ghost:hover { color: var(--text); border-color: rgba(255,255,255,0.18); }
+
+    /* Right side: trust cards */
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .trust-card {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(139,26,26,0.2);
+      border-radius: 12px;
+      padding: 18px 22px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      backdrop-filter: blur(8px);
+      transition: border-color 0.2s, background 0.2s;
+    }
+
+    .trust-card:hover {
+      background: rgba(139,26,26,0.08);
+      border-color: rgba(192,57,43,0.35);
+    }
+
+    .trust-icon {
+      width: 42px; height: 42px;
+      border-radius: 9px;
+      background: rgba(139,26,26,0.2);
+      border: 1px solid rgba(192,57,43,0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .trust-icon svg { width: 19px; height: 19px; color: #F87171; }
+
+    .trust-title {
+      font-family: var(--font-h);
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 2px;
+    }
+
+    .trust-sub {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* ── SECTION base ───────────────────────────────── */
+    section { padding: 88px 40px; }
+
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+
+    .sec-label {
+      font-family: var(--font-h);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red-mid);
+      margin-bottom: 10px;
+    }
+
+    .sec-title {
+      font-family: var(--font-h);
+      font-size: clamp(1.6rem, 3vw, 2.4rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 14px;
+    }
+
+    .sec-desc {
+      font-size: 1rem;
+      color: var(--muted);
+      max-width: 560px;
+      margin-bottom: 52px;
+    }
+
+    /* ── ABOUT ──────────────────────────────────────── */
+    .about-section { background: var(--dark); }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+
+    .about-copy p {
+      font-size: 0.97rem;
+      color: var(--muted);
+      line-height: 1.75;
+      margin-bottom: 18px;
+    }
+
+    .about-copy p strong { color: var(--text); }
+
+    .highlight-bar {
+      margin-top: 32px;
+      padding: 22px 26px;
+      background: rgba(139,26,26,0.1);
+      border-left: 3px solid var(--red-mid);
+      border-radius: 0 10px 10px 0;
+    }
+
+    .highlight-bar p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 0 !important;
+    }
+
+    .highlight-bar strong { color: #FECACA !important; }
+
+    .about-photo-wrap {
+      border-radius: 14px;
+      overflow: hidden;
+      border: 1px solid rgba(139,26,26,0.2);
+      box-shadow: 0 24px 60px rgba(0,0,0,0.6);
+    }
+
+    .about-photo-wrap img {
+      width: 100%;
+      height: 340px;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .about-photo-wrap:hover img { transform: scale(1.03); }
+
+    /* ── SERVICES ───────────────────────────────────── */
+    .services-section {
+      background: var(--dark-mid);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+      gap: 18px;
+    }
+
+    .svc-card {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 13px;
+      padding: 26px;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+
+    .svc-card:hover {
+      border-color: rgba(192,57,43,0.35);
+      transform: translateY(-4px);
+    }
+
+    .svc-icon {
+      width: 42px; height: 42px;
+      border-radius: 9px;
+      background: rgba(139,26,26,0.12);
+      border: 1px solid rgba(192,57,43,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .svc-icon svg { width: 19px; height: 19px; color: #F87171; }
+
+    .svc-card h3 {
+      font-family: var(--font-h);
+      font-size: 0.97rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+
+    .svc-card p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── SCHEDULE ───────────────────────────────────── */
+    .schedule-section { background: var(--dark); }
+
+    .schedule-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 72px;
+      align-items: start;
+    }
+
+    /* Info column */
+    .sched-info {}
+
+    .info-row {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 28px;
+    }
+
+    .info-ico {
+      width: 42px; height: 42px;
+      border-radius: 9px;
+      background: rgba(139,26,26,0.1);
+      border: 1px solid rgba(192,57,43,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .info-ico svg { width: 17px; height: 17px; color: #F87171; }
+
+    .info-row strong {
+      display: block;
+      font-family: var(--font-h);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 3px;
+    }
+
+    .info-row span {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .redirect-box {
+      background: rgba(139,26,26,0.07);
+      border: 1px solid rgba(192,57,43,0.2);
+      border-radius: 11px;
+      padding: 18px 20px;
+      margin-top: 32px;
+    }
+
+    .redirect-box p {
+      font-size: 0.83rem;
+      color: var(--muted);
+      line-height: 1.65;
+    }
+
+    .redirect-box strong { color: var(--text); }
+
+    /* Form */
+    .sched-form {
+      background: var(--dark-card);
+      border: 1px solid var(--border);
+      border-radius: 15px;
+      padding: 34px;
+    }
+
+    .form-hd {
+      font-family: var(--font-h);
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+
+    .form-sub {
+      font-size: 0.84rem;
+      color: var(--muted);
+      margin-bottom: 26px;
+    }
+
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+
+    .fg {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      margin-bottom: 16px;
+    }
+
+    label {
+      font-family: var(--font-h);
+      font-size: 0.77rem;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.03em;
+    }
+
+    label .req { color: var(--red-lt); margin-left: 3px; }
+
+    input, select, textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 11px 13px;
+      color: var(--text);
+      font-family: var(--font-b);
+      font-size: 0.9rem;
+      width: 100%;
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      -webkit-appearance: none;
+      appearance: none;
+    }
+
+    input::placeholder, textarea::placeholder { color: var(--dim); }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='11' height='11' viewBox='0 0 24 24' fill='none' stroke='%236B5555' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 13px center;
+      padding-right: 34px;
+      cursor: pointer;
+    }
+
+    select option { background: #1A0C0C; color: var(--text); }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: rgba(192,57,43,0.55);
+      box-shadow: 0 0 0 3px rgba(139,26,26,0.12);
+    }
+
+    textarea { resize: vertical; min-height: 96px; }
+
+    .form-submit {
+      margin-top: 22px;
+      width: 100%;
+      background: var(--red-mid);
+      color: #fff;
+      border: none;
+      padding: 14px;
+      border-radius: 8px;
+      font-family: var(--font-h);
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 4px 18px rgba(192,57,43,0.35);
+      transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    }
+
+    .form-submit:hover {
+      background: var(--red-lt);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 24px rgba(231,76,60,0.45);
+    }
+
+    .form-submit:focus-visible {
+      outline: 2px solid var(--red-lt);
+      outline-offset: 2px;
+    }
+
+    .form-submit svg { width: 15px; height: 15px; }
+
+    /* ── FOOTER ─────────────────────────────────────── */
+    footer {
+      background: #080202;
+      border-top: 1px solid var(--border);
+      padding: 36px 40px;
+    }
+
+    .footer-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .footer-brand img { height: 30px; width: auto; opacity: 0.75; clip-path: inset(3% 1% 3% 1% round 2px); }
+
+    .footer-note { font-size: 0.76rem; color: var(--dim); }
+
+    .footer-link {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: color 0.2s;
+    }
+
+    .footer-link:hover { color: var(--text); }
+    .footer-link svg { width: 13px; height: 13px; }
+
+    /* ── RESPONSIVE ─────────────────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 0 20px; }
+      .nav-cta { font-size: 0.75rem; padding: 8px 14px; }
+      section { padding: 64px 24px; }
+      .hero-inner { grid-template-columns: 1fr; padding: 0 24px 64px; gap: 40px; }
+      .hero-right { display: none; }
+      .hero-logo { width: 220px; }
+      .about-grid { grid-template-columns: 1fr; }
+      .about-photo-wrap { order: -1; }
+      .about-photo-wrap img { height: 240px; }
+      .services-grid { grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+      .schedule-layout { grid-template-columns: 1fr; gap: 40px; }
+      .sched-info { order: -1; }
+      .form-row { grid-template-columns: 1fr; }
+      .sched-form { padding: 24px 20px; }
+      footer { padding: 28px 24px; }
+      .footer-inner { flex-direction: column; align-items: flex-start; gap: 10px; }
+    }
+
+    /* ── Tablet narrow ──────────────────────────────── */
+    @media (max-width: 680px) {
+      nav { height: auto; padding: 12px 18px; }
+      .nav-logo img { height: 28px; }
+      .nav-cta { display: none; }
+      .nav-back { font-size: 0.72rem; }
+      section { padding: 52px 18px; }
+      .hero-inner { padding: 0 18px 52px; }
+      .hero-logo { width: 190px; margin-bottom: 20px; }
+      .hero h1 { font-size: 2rem; }
+      .hero-desc { font-size: 0.92rem; }
+      .hero-actions { flex-direction: column; gap: 10px; }
+      .btn-red, .btn-ghost { width: 100%; justify-content: center; padding: 14px 20px; }
+      .services-grid { grid-template-columns: 1fr; }
+      .sec-desc { margin-bottom: 32px; }
+      .highlight-bar { padding: 16px 18px; }
+      .sched-form { padding: 20px 16px; }
+      .redirect-box { padding: 14px 16px; }
+      footer { padding: 24px 18px; }
+    }
+
+    /* ── Small phones (≤ 480px) ─────────────────────── */
+    @media (max-width: 480px) {
+      .hero h1 { font-size: 1.75rem; }
+      .hero-logo { width: 160px; }
+      /* Prevent iOS zoom on form inputs */
+      input, select, textarea { font-size: 1rem; }
+      .svc-card { padding: 20px; }
+      .form-hd { font-size: 1rem; }
+      .info-row { gap: 12px; }
+    }
+
+    /* ══ Premium Motion System ════════════════════════ */
+
+    .reveal-block {
+      opacity: 0;
+      transform: translateY(26px);
+      transition: opacity 0.65s cubic-bezier(0.23,1,0.32,1),
+                  transform 0.65s cubic-bezier(0.23,1,0.32,1);
+    }
+    .reveal-block.in-view { opacity: 1; transform: translateY(0); }
+
+    .hero { overflow: hidden; }
+
+    nav.nav-scrolled {
+      background: rgba(13,5,5,0.98);
+      box-shadow: 0 2px 24px rgba(0,0,0,0.5);
+    }
+
+    .btn-red, .btn-ghost {
+      transition: background 0.18s ease, box-shadow 0.18s ease,
+                  transform 0.15s cubic-bezier(0.23,1,0.32,1) !important;
+    }
+    .btn-red:hover  { transform: translateY(-2px) scale(1.015); }
+    .btn-red:active { transform: scale(0.96) !important; }
+    .btn-ghost:hover  { transform: translateY(-1px); }
+    .btn-ghost:active { transform: scale(0.97) !important; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Nav -->
+  <nav role="navigation" aria-label="Site navigation">
+    <a class="nav-back" href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 12H5M12 19l-7-7 7-7"/>
+      </svg>
+      All Locations
+    </a>
+    <div class="nav-logo">
+      <img src="assets/logo.png" alt="Stewart Ave Collision and Repair" />
+    </div>
+    <a class="nav-cta" href="#schedule">Schedule a Repair</a>
+  </nav>
+
+  <!-- ── HERO ── -->
+  <section class="hero" aria-labelledby="hero-h1">
+    <img class="hero-bg" src="assets/building.png" alt="Stewart Ave Collision and Repair building in Wausau, WI" />
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="hero-inner">
+      <div class="hero-left">
+        <img class="hero-logo" src="assets/logo.png" alt="Stewart Ave Collision and Repair logo" />
+
+        <div class="hero-eyebrow">Wausau, Wisconsin</div>
+
+        <h1 id="hero-h1">
+          Your One Stop<br/><em>Collision Shop</em>
+        </h1>
+
+        <p class="hero-desc">
+          Central Wisconsin's preferred auto body shop — conveniently located on Stewart Avenue in Wausau. From minor scratches to major collision damage, we get your vehicle back on the road fast.
+        </p>
+
+        <div class="hero-actions">
+          <a class="btn-red" href="#schedule">
+            Schedule a Repair
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+          <a class="btn-ghost" href="#services">Our Services</a>
+        </div>
+      </div>
+
+      <div class="hero-right" aria-label="Key benefits">
+
+        <div class="trust-card">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <div>
+            <div class="trust-title">Lifetime Warranty</div>
+            <div class="trust-sub">All auto body &amp; mechanical repairs covered for as long as you own the vehicle</div>
+          </div>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="1" y="3" width="15" height="13" rx="2"/><path d="M16 8h5l3 3v4h-8V8z"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/>
+            </svg>
+          </div>
+          <div>
+            <div class="trust-title">Free Loaner Cars</div>
+            <div class="trust-sub">Available while your vehicle is in our shop — stay mobile throughout the repair process</div>
+          </div>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>
+            </svg>
+          </div>
+          <div>
+            <div class="trust-title">All Insurance Companies</div>
+            <div class="trust-sub">We work with every carrier and will work within your budget to restore your vehicle</div>
+          </div>
+        </div>
+
+        <div class="trust-card">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+            </svg>
+          </div>
+          <div>
+            <div class="trust-title">Free Estimates</div>
+            <div class="trust-sub">Stop in or call — no obligation written estimates for every job</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── ABOUT ── -->
+  <section class="about-section" id="about" aria-labelledby="about-heading">
+    <div class="section-inner">
+      <div class="about-grid">
+        <div class="about-copy">
+          <p class="sec-label">Who We Are</p>
+          <h2 class="sec-title" id="about-heading">Central Wisconsin's Preferred Auto Body Shop</h2>
+
+          <p>
+            Stewart Ave Collision &amp; Repair is central Wisconsin's preferred auto body shop and collision repair center, conveniently located on Stewart Avenue in Wausau. You can trust our staff to get your vehicle back on the road fast by offering bumper-to-bumper services — including all auto body and mechanical repairs needed as a result of your accident, all under one roof.
+          </p>
+
+          <p>
+            From a minor scratch or dent to major auto body and collision repair, our experienced, friendly, and professional staff will help you through the entire collision repair process — from preparing an estimate, to the insurance claim and appraisal process, to completing your repair.
+          </p>
+
+          <p>
+            We work with <strong>ALL INSURANCE COMPANIES</strong> and will work within your budget to get your vehicle back on the road as soon as possible.
+          </p>
+
+          <div class="highlight-bar">
+            <p>
+              <strong>FREE LOANER CARS</strong> are available and all auto body and mechanical repairs performed by Stewart Ave Collision &amp; Repair are covered by a <strong>LIFETIME WARRANTY</strong> for as long as you own the vehicle.
+            </p>
+          </div>
+        </div>
+
+        <div class="about-photo-wrap">
+          <img src="assets/building.png" alt="Stewart Ave Collision and Repair shop exterior in Wausau, WI" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SERVICES ── -->
+  <section class="services-section" id="services" aria-labelledby="services-heading">
+    <div class="section-inner">
+      <p class="sec-label">What We Fix</p>
+      <h2 class="sec-title" id="services-heading">Collision &amp; Body Services</h2>
+      <p class="sec-desc">Every service performed by our licensed technicians is backed by a lifetime warranty — so you can drive away with confidence.</p>
+
+      <div class="services-grid">
+
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>
+            </svg>
+          </div>
+          <h3>Body &amp; Frame Reconstruction</h3>
+          <p>Full structural repair and frame straightening using precision alignment equipment to restore your vehicle's integrity after major impact.</p>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+            </svg>
+          </div>
+          <h3>Auto Body Repair</h3>
+          <p>Complete bumper-to-bumper body repair — from minor dents and dings to full panel replacement after collision damage.</p>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+            </svg>
+          </div>
+          <h3>Color Matching &amp; Painting</h3>
+          <p>Factory-matched paint application from spot repairs to full vehicle repaints — seamless results that look like it just came off the lot.</p>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 2H2v10l9.29 9.29c.94.94 2.48.94 3.42 0l6.58-6.58c.94-.94.94-2.48 0-3.42L12 2z"/><path d="M7 7h.01"/>
+            </svg>
+          </div>
+          <h3>Welding &amp; Spot Welding</h3>
+          <p>Professional MIG and spot welding for structural repairs, panel replacement, and reinforcement work — done right the first time.</p>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <circle cx="12" cy="12" r="3"/><path d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"/>
+            </svg>
+          </div>
+          <h3>Dashboard &amp; Steering Column Repairs</h3>
+          <p>Interior mechanical repairs resulting from collision damage — including airbag systems, steering columns, and dashboard components.</p>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            </svg>
+          </div>
+          <h3>All Collision-Related Repairs</h3>
+          <p>Every mechanical and body repair needed as a result of your accident — handled under one roof so you only have one point of contact.</p>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <polygon points="12 2 22 8.5 22 15.5 12 22 2 15.5 2 8.5 12 2"/>
+            </svg>
+          </div>
+          <h3>Aluminum Repairs</h3>
+          <p>Fully equipped to handle aluminum body repairs on all new Ford models and most semi-trucks — specialized tooling for modern vehicle construction.</p>
+        </div>
+
+        <div class="svc-card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+            </svg>
+          </div>
+          <h3>Insurance Claims Assistance</h3>
+          <p>We handle the paperwork and communicate directly with your insurance adjuster — making the claims process stress-free for you.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ── SCHEDULE ── -->
+  <section class="schedule-section" id="schedule" aria-labelledby="sched-heading">
+    <div class="section-inner">
+      <div class="schedule-layout">
+
+        <!-- Info -->
+        <div class="sched-info">
+          <p class="sec-label">Book an Appointment</p>
+          <h2 class="sec-title" id="sched-heading">Schedule Your<br/>Collision Repair</h2>
+          <p class="sec-desc">Fill out the form and our team will reach out within one business day to confirm your appointment.</p>
+
+          <div class="info-row">
+            <div class="info-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Location</strong>
+              <span>Stewart Ave Collision &amp; Repair LLC<br/>Stewart Avenue, Wausau, WI — Collision &amp; Body Building</span>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+              </svg>
+            </div>
+            <div>
+              <strong>Hours</strong>
+              <span>Monday – Friday: 8:00 AM – 5:30 PM<br/>Saturday: By Appointment</span>
+            </div>
+          </div>
+
+          <div class="info-row">
+            <div class="info-ico">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.65 3.42 2 2 0 0 1 3.62 1h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.6a16 16 0 0 0 6 6l.92-.92a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/>
+              </svg>
+            </div>
+            <div>
+              <strong>This location is for collision &amp; body work only</strong>
+              <span>For oil changes, tires, and general maintenance, visit <a href="autocare.html" style="color:#93C5FD;text-decoration:underline;">Stewart Ave Auto Care</a></span>
+            </div>
+          </div>
+
+          <div class="redirect-box" role="note">
+            <p><strong>Heads up:</strong> This scheduling form is for collision and body repair only. Need an oil change, tire rotation, or inspection? Please use our <a href="autocare.html" style="color:#93C5FD;">Auto Care location</a> to avoid mix-ups and get the right team on your vehicle.</p>
+          </div>
+        </div>
+
+        <!-- Form -->
+        <div class="sched-form" role="form" aria-labelledby="form-hd">
+          <div class="form-hd" id="form-hd">Request a Repair Appointment</div>
+          <div class="form-sub">We'll contact you within 1 business day to confirm.</div>
+
+          <form action="#" method="post" novalidate>
+            <div class="form-row">
+              <div class="fg">
+                <label for="fn">First Name <span class="req" aria-label="required">*</span></label>
+                <input type="text" id="fn" name="first_name" placeholder="Jane" required autocomplete="given-name" />
+              </div>
+              <div class="fg">
+                <label for="ln">Last Name <span class="req" aria-label="required">*</span></label>
+                <input type="text" id="ln" name="last_name" placeholder="Smith" required autocomplete="family-name" />
+              </div>
+            </div>
+
+            <div class="fg">
+              <label for="ph">Phone Number <span class="req" aria-label="required">*</span></label>
+              <input type="tel" id="ph" name="phone" placeholder="(715) 000-0000" required autocomplete="tel" />
+            </div>
+
+            <div class="fg">
+              <label for="em">Email Address</label>
+              <input type="email" id="em" name="email" placeholder="jane@example.com" autocomplete="email" />
+            </div>
+
+            <div class="form-row">
+              <div class="fg">
+                <label for="vy">Vehicle Year <span class="req" aria-label="required">*</span></label>
+                <input type="text" id="vy" name="vehicle_year" placeholder="2019" required />
+              </div>
+              <div class="fg">
+                <label for="vm">Make &amp; Model <span class="req" aria-label="required">*</span></label>
+                <input type="text" id="vm" name="vehicle_make" placeholder="Ford F-150" required />
+              </div>
+            </div>
+
+            <div class="fg">
+              <label for="st">Type of Repair <span class="req" aria-label="required">*</span></label>
+              <select id="st" name="service_type" required>
+                <option value="" disabled selected>Select service type…</option>
+                <option>Body &amp; Frame Reconstruction</option>
+                <option>Auto Body Repair</option>
+                <option>Color Matching &amp; Painting</option>
+                <option>Welding / Spot Welding</option>
+                <option>Dashboard / Steering Column</option>
+                <option>Aluminum Repair</option>
+                <option>Insurance Claim</option>
+                <option>Free Estimate</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="fg">
+              <label for="pd">Preferred Date</label>
+              <input type="date" id="pd" name="preferred_date" />
+            </div>
+
+            <div class="fg">
+              <label for="ins">Insurance Company (if applicable)</label>
+              <input type="text" id="ins" name="insurance" placeholder="e.g. State Farm, Allstate, American Family…" />
+            </div>
+
+            <div class="fg">
+              <label for="nt">Describe the Damage</label>
+              <textarea id="nt" name="notes" placeholder="Tell us what happened and what areas of the vehicle were affected…"></textarea>
+            </div>
+
+            <button type="submit" class="form-submit">
+              Submit Request
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer role="contentinfo">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <img src="assets/logo.png" alt="Stewart Ave Collision and Repair" />
+      </div>
+      <span class="footer-note">Collision &amp; Body Work Only &nbsp;·&nbsp; Wausau, WI &nbsp;·&nbsp; Lifetime Warranty</span>
+      <a class="footer-link" href="autocare.html">
+        Auto Care Location
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M5 12h14M12 5l7 7-7 7"/>
+        </svg>
+      </a>
+    </div>
+  </footer>
+
+  <script src="motion.js"></script>
+</body>
+</html>
