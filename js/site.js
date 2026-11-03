@@ -40,6 +40,7 @@
           ${MARK}
           <span class="brand__name">On The Globe<small>Marketing</small></span>
         </a>
+        <a class="btn btn--brick nav__cta nav__cta--bar" href="#contact">Let's talk</a>
         <button class="nav__toggle" aria-label="Menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span></button>
         <nav class="nav__links" id="nav-links" aria-label="Main">
           ${link("work.html", "Work", "work")}
@@ -54,7 +55,7 @@
       const open = el.classList.toggle("is-open");
       toggle.setAttribute("aria-expanded", String(open));
     });
-    el.querySelectorAll(".nav__links a").forEach((a) =>
+    el.querySelectorAll(".nav__links a, .nav__cta--bar").forEach((a) =>
       a.addEventListener("click", () => {
         el.classList.remove("is-open");
         toggle.setAttribute("aria-expanded", "false");
@@ -93,7 +94,7 @@
       <svg class="contact__dots" viewBox="0 0 400 400" aria-hidden="true">${dotGlobe()}</svg>
       <div class="wrap">
         <div class="contact__grid">
-          <h2 class="contact__title reveal">Let's put you <em>on the map.</em></h2>
+          <h2 class="contact__title reveal">Let's put you <em>on the globe.</em></h2>
           <div class="reveal" style="--delay:120ms">
             <p class="contact__lede">Tell us who you are and how to reach you. We'll get back to you within a day — no pitch deck, just a conversation.</p>
             <form class="cform" action="${FORM_ENDPOINT}" method="POST" novalidate data-contact-form>
@@ -117,7 +118,7 @@
               <label class="cform__field"><span class="label">Anything you'd like us to know? <i>Optional</i></span>
                 <textarea name="Message" rows="3" maxlength="1000"></textarea></label>
               <p class="cform__error" role="alert" data-form-error hidden></p>
-              <button class="btn btn--brick" type="submit">Put me on the map <span class="arrow">→</span></button>
+              <button class="btn btn--brick" type="submit">Put me on the globe <span class="arrow">→</span></button>
               <p class="cform__legal">We only use this to reply to you. <a href="privacy.html">Privacy policy</a></p>
             </form>
             <div class="cform__done" role="status" data-form-done hidden>

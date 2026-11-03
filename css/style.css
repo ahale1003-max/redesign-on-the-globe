@@ -140,11 +140,17 @@ dl, dd { margin: 0; }
   border-radius: 50%; background: var(--brick);
 }
 .nav__cta { height: 40px; font-size: 14px; padding: 0 16px; }
+.nav__cta--bar { display: none; white-space: nowrap; flex: none; }
+.brand__name { white-space: nowrap; }
 .nav__toggle { display: none; width: 44px; height: 44px; margin-right: -8px; }
 .nav__toggle span { display: block; width: 22px; height: 1.5px; background: currentColor; margin: 6px auto; transition: transform .25s var(--ease-out), opacity .2s; }
 
 @media (max-width: 760px) {
   .nav__toggle { display: block; }
+  /* always-visible "Let's talk" in the bar; the menu keeps its own copy */
+  .nav__inner { gap: 10px; }
+  .nav__cta--bar { display: inline-flex; margin-left: auto; font-size: 13px; padding: 0 14px; }
+  .nav.is-open .nav__cta--bar { visibility: hidden; }
   .nav__links {
     position: fixed; inset: var(--nav-h) 0 auto 0;
     flex-direction: column; align-items: flex-start; gap: 0;
@@ -158,7 +164,7 @@ dl, dd { margin: 0; }
   .nav.is-open { background: var(--ink); color: var(--fog); }
   .nav__link { font-size: 15px; padding: 16px 0; width: 100%; border-bottom: 1px solid var(--line-dark); }
   .nav__link[aria-current="page"]::before { left: auto; right: 0; }
-  .nav__cta { margin-top: 20px; }
+  .nav__links .nav__cta { margin-top: 20px; }
   .nav.is-open .nav__toggle span:nth-child(1) { transform: translateY(3.75px) rotate(45deg); }
   .nav.is-open .nav__toggle span:nth-child(2) { transform: translateY(-3.75px) rotate(-45deg); }
 }
@@ -607,7 +613,7 @@ dl, dd { margin: 0; }
   font-variation-settings: "wdth" 86;
   max-width: 12ch;
 }
-.contact__title em { font-style: normal; color: var(--brick); }
+.contact__title em { font-style: normal; color: var(--brick); display: block; white-space: nowrap; }
 .contact__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: start; }
 .contact__lede { color: var(--muted-dark); max-width: 42ch; font-size: 18px; }
 .contact__email {
@@ -670,6 +676,12 @@ dl, dd { margin: 0; }
 .contact__cols li { padding: 3px 0; }
 .contact__cols a:hover { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
 .contact__base { margin-top: 36px; display: flex; justify-content: space-between; gap: 20px; color: var(--muted-dark); font-size: 11px; flex-wrap: wrap; }
+@media (max-width: 360px) {
+  .brand { gap: 8px; }
+  .brand__name { font-size: 15px; }
+  .nav__cta--bar { font-size: 12.5px; padding: 0 11px; height: 38px; }
+}
+@media (max-width: 760px) { .contact { padding-top: 112px; } } /* clears the fixed bar when "Let's talk" jumps here */
 .contact__dots { position: absolute; right: -14%; top: -18%; width: 46%; opacity: .32; pointer-events: none; }
 
 @media (max-width: 900px) {
