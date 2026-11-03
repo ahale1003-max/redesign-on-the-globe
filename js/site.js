@@ -94,7 +94,7 @@
       <svg class="contact__dots" viewBox="0 0 400 400" aria-hidden="true">${dotGlobe()}</svg>
       <div class="wrap">
         <div class="contact__grid">
-          <h2 class="contact__title reveal">Let's <br>put you <em>on the <br>globe.</em></h2>
+          <h2 class="contact__title reveal">Let's put you <em>on the globe.</em></h2>
           <div class="reveal" style="--delay:120ms">
             <p class="contact__lede">Tell us who you are and how to reach you. We'll get back to you within a day — no pitch deck, just a conversation.</p>
             <form class="cform" action="${FORM_ENDPOINT}" method="POST" novalidate data-contact-form>

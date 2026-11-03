@@ -156,7 +156,7 @@
           <div class="slot">
             <div>
               <h3>This spot's open.</h3>
-              <p>We're taking on a small number of new clients. Your business could be the next pin on the map.</p>
+              <p>We're taking on a small number of new clients. Your business could be the next pin on the globe.</p>
               <a class="btn btn--brick" href="#contact">Start a project <span class="arrow">→</span></a>
             </div>
           </div>
