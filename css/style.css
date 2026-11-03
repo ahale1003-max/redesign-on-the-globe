@@ -609,12 +609,20 @@ dl, dd { margin: 0; }
    ========================================================================== */
 .contact { background: var(--ink); color: var(--fog); padding: clamp(80px, 12vw, 160px) 0 40px; position: relative; overflow: hidden; }
 .contact__title {
-  font-size: clamp(48px, 9vw, 150px); font-weight: 800; letter-spacing: -0.045em; line-height: .88;
+  /* sized from the grid, not the screen, so it keeps its distance from the form */
+  font-size: clamp(48px, 9vw, 130px);
+  font-size: clamp(48px, 9.75cqi, 130px);
+  font-weight: 800; letter-spacing: -0.045em; line-height: .88;
   font-variation-settings: "wdth" 86;
   max-width: 12ch;
 }
 .contact__title em { font-style: normal; color: var(--brick); display: block; white-space: nowrap; }
-.contact__grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: start; }
+/* side by side: four lines, widened, so the headline fills its column next to the form */
+@media (min-width: 901px) {
+  .contact__title { font-size: 11.7cqi; font-variation-settings: "wdth" 122; max-width: none; white-space: nowrap; }
+}
+@media (max-width: 900px) { .contact__title br { display: none; } }
+.contact__grid { container-type: inline-size; display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr); gap: 48px; align-items: start; }
 .contact__lede { color: var(--muted-dark); max-width: 42ch; font-size: 18px; }
 .contact__email {
   display: inline-block; margin-top: 18px;
